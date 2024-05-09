@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 
 const props = defineProps({
   totalCount: {
@@ -52,10 +52,6 @@ const displayedPages = computed(() => {
   }
 
   return range;
-});
-
-onMounted(async () => {
-  console.log("Total: " + props.totalCount)
 });
 </script>
 

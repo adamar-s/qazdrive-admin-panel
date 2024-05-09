@@ -4,7 +4,6 @@ import { useAdminPanelStore } from "@/stores/useAdminPanelStore";
 import { formatDate, formatTime } from "@/utils/format";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import Pagination from "@/components/UI/Pagination.vue";
-import { GetOrdersParams } from "@/types/type.ts";
 
 
 const adminPanelStore = useAdminPanelStore();
@@ -28,13 +27,9 @@ const getText = (item: string) => {
 }
 
 const updateOrders = async (page) => {
-  console.log(dates.value);
   await adminPanelStore.loadOrders(
       { created_from: dates.value[0], created_to: dates.value[1], page: page}
   );
-
-  console.log("TotalCount: " + adminPanelStore.count);
-
 };
 
 onMounted(async () => {

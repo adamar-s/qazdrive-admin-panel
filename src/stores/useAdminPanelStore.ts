@@ -11,7 +11,6 @@ export const useAdminPanelStore = defineStore("admin_panel", () => {
             const response = await AdminPanelDataService.getOrders(params);
             orders.value = response.data.results;
             count.value = response.data.count;
-            console.log('COUNT: ' + count.value);
         } catch (error) {
             console.error("Error loading zones:", error);
         }
