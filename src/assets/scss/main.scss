@@ -1,0 +1,95 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+html,
+body {
+  @apply overflow-x-hidden scroll-smooth bg-brand-light font-primary;
+  &.no-scroll {
+    @apply overflow-hidden;
+  }
+}
+
+.w-container {
+  @apply mx-auto max-w-[1400px] ;
+}
+.y-distance {
+  @apply mt-20;
+}
+
+.btn {
+  &-accent {
+    @apply inline-block border-[1.5px] border-brand-accent rounded-3xl bg-brand-accent px-10 py-3 text-white transition-all duration-300 ease-in-out;
+    &:hover {
+      @apply brightness-110;
+    }
+  }
+  &-delete {
+    @apply inline-block rounded-3xl bg-red-600 px-6 py-3 text-white transition-all duration-300 ease-in-out;
+    &:hover {
+      @apply brightness-110;
+    }
+  }
+  &-close {
+    @apply flex h-8 w-8 items-center justify-center rounded-lg bg-brand-gray;
+    svg {
+      @apply h-5 w-5;
+    }
+  }
+  &-back {
+    @apply inline-block border-[1.5px] border-brand-accent rounded-3xl px-10 py-3 text-brand-accent transition-all duration-300 ease-in-out;
+    &:hover {
+      @apply bg-brand-accent text-white;
+    }
+  }
+  &-plus {
+    @apply border-[1.5px] border-brand-accent rounded-[15px] py-3 px-4 ml-3 shrink-0;
+  }
+}
+
+input-wrapper {
+  label {
+    @apply mb-1 ml-1 block text-sm;
+  }
+}
+.input {
+  &-primary {
+    @apply w-full rounded-lg border border-brand-line px-4 py-3;
+    &:focus {
+      @apply border-brand-accent;
+      outline: 0 none;
+      outline-offset: 0;
+      box-shadow: 0 0 0 0.1rem #acd5b2;
+    }
+  }
+}
+
+.table-primary {
+  @apply mb-6 overflow-x-auto rounded-lg border border-brand-line bg-white;
+
+  table {
+    @apply w-full;
+    thead {
+      tr {
+        @apply border-b border-brand-line bg-gray-100 text-left text-sm text-gray-600;
+        th {
+          @apply whitespace-nowrap px-3 py-4 text-base font-bold;
+        }
+      }
+    }
+    tbody {
+      @apply divide-y divide-brand-line;
+      tr {
+        @apply transition-all duration-300 ease-in-out;
+        &:hover {
+          @apply bg-brand-gray;
+        }
+        td {
+          @apply p-3;
+        }
+      }
+    }
+  }
+}
+
+
