@@ -71,7 +71,7 @@ const displayedPages = computed(() => {
     </template>
 
     <span v-if="currentPage < totalPages - 2 && totalPages > 3">...</span>
-    <button @click="handleChangePage('goTo', totalPages)" :class="{ active: currentPage === totalPages, 'bg-brand-secondary': currentPage === totalPages }" class=" btn-paginate mx-1 px-3 py-1 text-sm" v-if="currentPage <= totalPages">{{ totalPages }}</button>
+    <button @click="handleChangePage('goTo', totalPages)" :class="{ active: currentPage === totalPages, 'bg-brand-primary': currentPage === totalPages, 'text-white': currentPage === totalPages }" class=" btn-paginate mx-1 px-3 py-1 text-sm" v-if="currentPage <= totalPages">{{ totalPages }}</button>
 
     <button @click="handleChangePage('next')" :disabled="currentPage >= totalPages" class="btn-paginate mx-1.5 bg-brand-secondary px-2" :style="{ opacity: currentPage >= totalPages ? 0.36 : 1 }">
       <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="#111827" viewBox="0 0 256 256"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path></svg>
