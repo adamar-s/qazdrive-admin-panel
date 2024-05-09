@@ -61,7 +61,7 @@ watch(
       <div class="h-full w-container">
         <div class="flex h-full items-center justify-between">
           <div class="flex h-full items-center justify-center px-4 xl:px-0">
-            <img src="@/assets/img/icons/logo.png" class="md:w-10" alt="" />
+            <img src="@/assets/img/icons/logo.png" class="md:w-12" alt="" />
             <h2 class="text-2xl font-bold ml-2">Qaz drive</h2>
           </div>
           <nav class="hidden xl:block">

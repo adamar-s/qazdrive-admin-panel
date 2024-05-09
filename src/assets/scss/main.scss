@@ -19,7 +19,7 @@ body {
 
 .btn {
   &-accent {
-    @apply inline-block border-[1.5px] border-brand-accent rounded-3xl bg-brand-accent px-10 py-3 text-white transition-all duration-300 ease-in-out;
+    @apply inline-block border-[1.5px] border-brand-accent rounded-2xl ml-4 bg-brand-accent px-8 py-2 text-white transition-all duration-300 ease-in-out;
     &:hover {
       @apply brightness-110;
     }
@@ -45,6 +45,12 @@ body {
   &-plus {
     @apply border-[1.5px] border-brand-accent rounded-[15px] py-3 px-4 ml-3 shrink-0;
   }
+  &-paginate {
+    @apply rounded-lg py-1 transition-all duration-300 ease-in-out border-b border-brand-line bg-gray-100;
+    &:active {
+      @apply bg-gray-300;
+    }
+  }
 }
 
 input-wrapper {
@@ -65,7 +71,7 @@ input-wrapper {
 }
 
 .table-primary {
-  @apply mb-6 overflow-x-auto rounded-lg border border-brand-line bg-white;
+  @apply overflow-x-auto rounded-lg border border-brand-line bg-white;
 
   table {
     @apply w-full;

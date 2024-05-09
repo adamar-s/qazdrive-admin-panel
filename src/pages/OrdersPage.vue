@@ -1,12 +1,20 @@
 <script setup lang="ts">
-import { onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { useAdminPanelStore } from "@/stores/useAdminPanelStore";
-import { formatDate, formatTime } from "@/utils/format"
+import { formatDate, formatTime } from "@/utils/format";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import Pagination from "@/components/UI/Pagination.vue";
+import { GetOrdersParams } from "@/types/type.ts";
+
 
 const adminPanelStore = useAdminPanelStore();
+const page = ref(1);
+
+const dates = ref([new Date(0), new Date()])
+
 
 const orders = computed(() => {
-  return adminPanelStore.getOrders
+  return adminPanelStore.getOrders;
 })
 
 const getText = (item: string) => {
@@ -19,15 +27,45 @@ const getText = (item: string) => {
   }
 }
 
+const updateOrders = async () => {
+  console.log(dates.value);
+  await adminPanelStore.loadOrders(
+      { created_from: dates.value[0], created_to: dates.value[1], page: page.value}
+  );
+
+  console.log("TotalCount: " + adminPanelStore.count);
+
+};
+
+const handlePaginationChange = async (page: number) => {
+
+};
+
 onMounted(async () => {
-  await adminPanelStore.loadOrders();
+  await updateOrders();
 });
+
+watch([dates.value], () => {
+  updateOrders()
+})
 </script>
 
 <template>
-  <section>
+  <section >
     <div class="w-container">
-      <div class="mx-auto py-8">
+      <div class="flex items-center w-1/2">
+        <VueDatePicker
+            v-model="dates"
+            :multiCalendars="2"
+            :clearable="false"
+            :range="true"
+            locale="ru"
+            :format="'dd.MM.yyyy HH:mm'"
+            @change="updateOrders"
+        ></VueDatePicker>
+        <button class="btn-accent" @click="updateOrders">Показать</button>
+      </div>
+      <div v-if="orders.length" class="mx-auto pt-8">
         <div class="table-primary">
           <table>
             <thead>
@@ -74,6 +112,16 @@ onMounted(async () => {
             </tr>
             </tbody>
           </table>
+        </div>
+        <div class="mb-5">
+          <Pagination :totalCount="adminPanelStore.count" @onChangePage="handlePaginationChange" />
+        </div>
+      </div>
+
+      <div v-else style="height: 100vh; padding-top: 2rem">
+        <div class="flex">
+          <img src="@/assets/img/icons/basket.png">
+          <h2 class="text-xl pl-4"> На данный момент нет текущих заказов</h2>
         </div>
       </div>
     </div>
