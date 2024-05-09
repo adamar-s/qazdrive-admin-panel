@@ -13,7 +13,8 @@ export default {
         "brand-light": "#FAFAFA",
         "brand-accent": "#007800",
         "brand-yellow": "#FFC700",
-        "brand-border": "#FFFFFF80"
+        "brand-border": "#FFFFFF80",
+        "brand-primary": "#3b82f6"
       },
       transitionTimingFunction: {
         "in-expo": "cubic-bezier(0.95, 0.05, 0.795, 0.035)",

@@ -18,37 +18,16 @@ body {
 }
 
 .btn {
-  &-accent {
-    @apply inline-block border-[1.5px] border-brand-accent rounded-2xl ml-4 bg-brand-accent px-8 py-2 text-white transition-all duration-300 ease-in-out;
+  &-primary {
+    @apply inline-block border-[1.5px] border-brand-primary rounded-2xl ml-4 bg-brand-primary px-8 py-2 text-white transition-all duration-300 ease-in-out;
     &:hover {
       @apply brightness-110;
     }
-  }
-  &-delete {
-    @apply inline-block rounded-3xl bg-red-600 px-6 py-3 text-white transition-all duration-300 ease-in-out;
-    &:hover {
-      @apply brightness-110;
-    }
-  }
-  &-close {
-    @apply flex h-8 w-8 items-center justify-center rounded-lg bg-brand-gray;
-    svg {
-      @apply h-5 w-5;
-    }
-  }
-  &-back {
-    @apply inline-block border-[1.5px] border-brand-accent rounded-3xl px-10 py-3 text-brand-accent transition-all duration-300 ease-in-out;
-    &:hover {
-      @apply bg-brand-accent text-white;
-    }
-  }
-  &-plus {
-    @apply border-[1.5px] border-brand-accent rounded-[15px] py-3 px-4 ml-3 shrink-0;
   }
   &-paginate {
-    @apply rounded-lg py-1 transition-all duration-300 ease-in-out border-b border-brand-line bg-gray-100;
+    @apply rounded-lg py-1 transition-all duration-300 ease-in-out border-b border-brand-line;
     &:active {
-      @apply bg-gray-300;
+      @apply bg-brand-primary;
     }
   }
 }

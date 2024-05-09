@@ -27,32 +27,28 @@ const getText = (item: string) => {
   }
 }
 
-const updateOrders = async () => {
+const updateOrders = async (page) => {
   console.log(dates.value);
   await adminPanelStore.loadOrders(
-      { created_from: dates.value[0], created_to: dates.value[1], page: page.value}
+      { created_from: dates.value[0], created_to: dates.value[1], page: page}
   );
 
   console.log("TotalCount: " + adminPanelStore.count);
 
 };
 
-const handlePaginationChange = async (page: number) => {
-
-};
-
 onMounted(async () => {
-  await updateOrders();
+  await updateOrders(1);
 });
 
 watch([dates.value], () => {
-  updateOrders()
+  updateOrders(1)
 })
 </script>
 
 <template>
   <section >
-    <div class="w-container">
+    <div v-if="orders" class="w-container">
       <div class="flex items-center w-1/2">
         <VueDatePicker
             v-model="dates"
@@ -63,7 +59,7 @@ watch([dates.value], () => {
             :format="'dd.MM.yyyy HH:mm'"
             @change="updateOrders"
         ></VueDatePicker>
-        <button class="btn-accent" @click="updateOrders">Показать</button>
+        <button class="btn-primary" @click="updateOrders">Показать</button>
       </div>
       <div v-if="orders.length" class="mx-auto pt-8">
         <div class="table-primary">
@@ -114,7 +110,7 @@ watch([dates.value], () => {
           </table>
         </div>
         <div class="mb-5">
-          <Pagination :totalCount="adminPanelStore.count" @onChangePage="handlePaginationChange" />
+          <Pagination :totalCount="adminPanelStore.count" @onChangePage="updateOrders($event)" />
         </div>
       </div>
 

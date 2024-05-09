@@ -20,5 +20,5 @@ export const useAdminPanelStore = defineStore("admin_panel", () => {
     const getOrders = computed(() => {
         return orders.value;
     })
-    return {  orders, getOrders, loadOrders }
+    return {  orders, getOrders, loadOrders, count }
 })
