@@ -18,6 +18,15 @@ body {
 }
 
 .btn {
+  &-accent {
+    @apply relative flex items-center justify-center overflow-hidden rounded-lg bg-brand-accent px-6 py-3 text-orange-50 brightness-110 transition-all duration-300 ease-in-out;
+    &:hover {
+      @apply brightness-90;
+    }
+    &:disabled {
+      @apply brightness-75;
+    }
+  }
   &-primary {
     @apply inline-block border-[1.5px] border-brand-primary rounded-2xl ml-4 bg-brand-primary px-8 py-2 text-white transition-all duration-300 ease-in-out;
     &:hover {
