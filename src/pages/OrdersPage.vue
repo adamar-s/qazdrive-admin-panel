@@ -54,7 +54,7 @@ watch([dates.value], () => {
             :format="'dd.MM.yyyy HH:mm'"
             @change="updateOrders"
         ></VueDatePicker>
-        <button class="btn-primary" @click="updateOrders">Показать</button>
+        <button class="btn-primary" @click="updateOrders(1)">Показать</button>
       </div>
       <div v-if="orders.length" class="mx-auto pt-8">
         <div class="table-primary">
