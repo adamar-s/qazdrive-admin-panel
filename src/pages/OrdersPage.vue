@@ -4,7 +4,7 @@ import { useAdminPanelStore } from "@/stores/useAdminPanelStore";
 import { formatDate, formatTime } from "@/utils/format";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import Pagination from "@/components/UI/Pagination.vue";
-
+import * as XLSX from 'xlsx';
 
 const adminPanelStore = useAdminPanelStore();
 const page = ref(1);
@@ -38,7 +38,28 @@ onMounted(async () => {
 
 watch([dates.value], () => {
   updateOrders(1)
-})
+});
+
+const exportToExcel = () => {
+  const ordersData = orders.value.map(order => ({
+    "Номерной знак": order.license_plate,
+    "Время": formatTime(order.created),
+    "Дата": formatDate(order.created),
+    "Статус": getText(order.status),
+    "Количество топлива клиента": order.litre ? order.litre + ' л' : 'нет',
+    "Подтвержено оператором": order.litre_completed ? order.litre_completed + ' л' : 'нет',
+    "Цена ла литр": order.fuel_price + " ₸",
+    "Оплачено клиентом": order.sum_paid + " ₸",
+    "Начислено бонусов": order.cashback,
+    "Оплачено бонусами": order.use_balance ? order.balance_amount_paid + " ₸" : 'нет',
+    "АГЗС": order.station
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(ordersData);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Заказы");
+  XLSX.writeFile(workbook, "заказы.xlsx");
+};
 </script>
 
 <template>
@@ -55,6 +76,7 @@ watch([dates.value], () => {
             @change="updateOrders"
         ></VueDatePicker>
         <button class="btn-primary" @click="updateOrders(1)">Показать</button>
+        <button class="btn-exel" @click="exportToExcel">Excel</button>
       </div>
       <div v-if="orders.length" class="mx-auto pt-8">
         <div class="table-primary">
