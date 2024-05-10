@@ -34,9 +34,9 @@ body {
     }
   }
   &-exel {
-    @apply inline-block border-[1.5px] border-brand-accent rounded-2xl ml-4 bg-brand-accent px-8 py-2 text-white transition-all duration-300 ease-in-out;
+    @apply inline-block border-[1.5px] border-brand-accent rounded-2xl ml-4 bg-brand-accent brightness-110 px-8 py-2 text-white transition-all duration-300 ease-in-out;
     &:hover {
-      @apply brightness-110;
+      @apply brightness-100;
     }
   }
   &-paginate {
