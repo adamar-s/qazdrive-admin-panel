@@ -4,13 +4,14 @@ import { useAdminPanelStore } from "@/stores/useAdminPanelStore";
 import { formatDate, formatTime } from "@/utils/format";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import Pagination from "@/components/UI/Pagination.vue";
-import * as XLSX from 'xlsx';
+// import * as XLSX from 'xlsx';
 
 const adminPanelStore = useAdminPanelStore();
-const page = ref(1);
 
-const dates = ref([new Date(0), new Date()])
-
+const today = new Date();
+const startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
+const lastWeekStartDate = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+const dates = ref([startDate, today]);
 
 const orders = computed(() => {
   return adminPanelStore.getOrders;
@@ -26,40 +27,67 @@ const getText = (item: string) => {
   }
 }
 
-const updateOrders = async (page) => {
-  await adminPanelStore.loadOrders(
-      { created_from: dates.value[0], created_to: dates.value[1], page: page}
-  );
-};
-
 onMounted(async () => {
   await updateOrders(1);
 });
+
+const updateOrders = async (page) => {
+  await adminPanelStore.loadOrders(
+      { created_from: dates.value[0], created_to: dates.value[1], page: 1}
+  );
+};
 
 watch([dates.value], () => {
   updateOrders(1)
 });
 
-const exportToExcel = () => {
-  const ordersData = orders.value.map(order => ({
-    "Номерной знак": order.license_plate,
-    "Время": formatTime(order.created),
-    "Дата": formatDate(order.created),
-    "Статус": getText(order.status),
-    "Количество топлива клиента": order.litre ? order.litre + ' л' : 'нет',
-    "Подтвержено оператором": order.litre_completed ? order.litre_completed + ' л' : 'нет',
-    "Цена ла литр": order.fuel_price + " ₸",
-    "Оплачено клиентом": order.sum_paid + " ₸",
-    "Начислено бонусов": order.cashback,
-    "Оплачено бонусами": order.use_balance ? order.balance_amount_paid + " ₸" : 'нет',
-    "АГЗС": order.station
-  }));
+const lastWeek = () => {
+  const today = new Date();
+  const lastWeekStart = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7, 0, 0, 0);
+  return [lastWeekStart, today];
+}
 
-  const worksheet = XLSX.utils.json_to_sheet(ordersData);
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Заказы");
-  XLSX.writeFile(workbook, "заказы.xlsx");
+const excelLink = computed(() => {
+  return adminPanelStore.getExcel
+})
+
+const downloadExcel = async () => {
+  try {
+    await adminPanelStore.loadExcel({
+      created_from: lastWeekStartDate,
+      created_to: dates.value[1]
+    })
+    const link = document.createElement('a');
+    link.href = excelLink.value;
+    link.download = 'orders.xlsx';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error('Error downloading Excel file:', error);
+  }
 };
+
+// const exportToExcel = () => {
+//   const ordersData = orders.value.map(order => ({
+//     "Номерной знак": order.license_plate,
+//     "Время": formatTime(order.created),
+//     "Дата": formatDate(order.created),
+//     "Статус": getText(order.status),
+//     "Количество топлива клиента": order.litre ? order.litre + ' л' : 'нет',
+//     "Подтвержено оператором": order.litre_completed ? order.litre_completed + ' л' : 'нет',
+//     "Цена ла литр": order.fuel_price + " ₸",
+//     "Оплачено клиентом": order.sum_paid + " ₸",
+//     "Начислено бонусов": order.cashback,
+//     "Оплачено бонусами": order.use_balance ? order.balance_amount_paid + " ₸" : 'нет',
+//     "АГЗС": order.station
+//   }));
+//
+//   const worksheet = XLSX.utils.json_to_sheet(ordersData);
+//   const workbook = XLSX.utils.book_new();
+//   XLSX.utils.book_append_sheet(workbook, worksheet, "Заказы");
+//   XLSX.writeFile(workbook, "заказы.xlsx");
+// };
 </script>
 
 <template>
@@ -76,7 +104,7 @@ const exportToExcel = () => {
             @change="updateOrders"
         ></VueDatePicker>
         <button class="btn-primary" @click="updateOrders(1)">Показать</button>
-        <button class="btn-exel" @click="exportToExcel">Excel</button>
+        <button class="btn-exel" @click="downloadExcel">Excel</button>
       </div>
       <div v-if="orders.length" class="mx-auto pt-8">
         <div class="table-primary">
