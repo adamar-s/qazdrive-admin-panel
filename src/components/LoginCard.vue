@@ -6,15 +6,11 @@ const router = useRouter();
 
 const name = ref("");
 
-const removeToken = () => {
-  token.value = "";
-}
 const token = ref(window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '')
 
 const saveToken = () => {
   window.localStorage.setItem('token', token.value as string);
   router.push("/");
-  removeToken()
 }
 </script>
 
