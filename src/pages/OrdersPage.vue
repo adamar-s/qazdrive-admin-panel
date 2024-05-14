@@ -12,6 +12,7 @@ const today = new Date();
 const startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
 const lastWeekStartDate = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
 const dates = ref([startDate, today]);
+const page = ref(1);
 
 const orders = computed(() => {
   return adminPanelStore.getOrders;
@@ -33,7 +34,7 @@ onMounted(async () => {
 
 const updateOrders = async (page) => {
   await adminPanelStore.loadOrders(
-      { created_from: dates.value[0], created_to: dates.value[1], page: 1}
+      { created_from: dates.value[0], created_to: dates.value[1], page: page}
   );
 };
 
