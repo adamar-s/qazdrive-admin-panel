@@ -118,10 +118,11 @@ const downloadExcel = async () => {
               <th class="">Статус</th>
               <th class="">Количество топлива клиента</th>
               <th class="">Подтвержено оператором</th>
-              <th class="">Цена ла литр</th>
+              <th class="">Цена за литр</th>
               <th class="">Оплачено клиентом</th>
               <th class="">Начислено бонусов</th>
               <th class="">Оплачено бонусами</th>
+              <th class="">Способ оплаты</th>
               <th class="">АГЗС</th>
             </tr>
             </thead>
@@ -149,6 +150,8 @@ const downloadExcel = async () => {
 
               <td v-if="order.use_balance">{{ order.balance_amount_paid }} ₸</td>
               <td v-else>нет</td>
+
+              <td>{{ order.payment_type }}</td>
 
               <td>{{ order.station }}</td>
             </tr>
