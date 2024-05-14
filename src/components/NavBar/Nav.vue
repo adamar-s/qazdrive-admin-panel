@@ -8,27 +8,6 @@ const list = ref([
     name: "Кабинет партнера",
     link: "/"
   },
-  {
-    name: "Платеж",
-    link: ""
-  },
-  {
-    name: "Касса",
-    link: ""
-  },
-  {
-    name: "Пользователи",
-    link: ""
-  },
-
-  {
-    name: "Статистика",
-    link: ""
-  },
-  {
-    name: "Контент",
-    link: ""
-  }
 ])
 
 const openedMobileNav = ref<boolean>(false)

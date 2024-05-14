@@ -28,7 +28,6 @@ const saveToken = () => {
           </div>
           <div class="flex flex-col items-center justify-center space-y-4">
             <Button type="submit" class="btn-accent">Войти</Button>
-            <Button class="underline">Забыли пароль?</Button>
           </div>
         </div>
       </form>
